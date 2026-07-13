@@ -1,0 +1,169 @@
+{
+  "name": "PL_SQL_To_Landing_Ingestion",
+  "properties": {
+    "description": "Generic pipeline: incrementally extracts rows from Azure SQL using a watermark column, lands them as CSV in ADLS, and updates the watermark.",
+    "parameters": {
+      "source_table": {
+        "type": "string"
+      },
+      "watermark_column": {
+        "type": "string",
+        "defaultValue": "last_modified"
+      },
+      "destination_folder": {
+        "type": "string"
+      },
+      "batch_id": {
+        "type": "string"
+      },
+      "catalog_name": {
+        "type": "string"
+      }
+    },
+    "activities": [
+      {
+        "name": "Get_Last_Watermark",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "00:05:00",
+          "retry": 1
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": {
+              "value": "@concat('SELECT ISNULL(MAX(watermark_value), ''1900-01-01'') AS last_watermark FROM audit.watermark_log WHERE source_table = ''', pipeline().parameters.source_table, '''')",
+              "type": "Expression"
+            }
+          },
+          "dataset": {
+            "referenceName": "ds_azure_sql",
+            "type": "DatasetReference"
+          }
+        }
+      },
+      {
+        "name": "Get_New_Watermark",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "00:05:00",
+          "retry": 1
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": {
+              "value": "@concat('SELECT MAX(', pipeline().parameters.watermark_column, ') AS new_watermark FROM ', pipeline().parameters.source_table)",
+              "type": "Expression"
+            }
+          },
+          "dataset": {
+            "referenceName": "ds_azure_sql",
+            "type": "DatasetReference"
+          }
+        }
+      },
+      {
+        "name": "Copy_Incremental_Data",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "Get_Last_Watermark",
+            "dependencyConditions": ["Succeeded"]
+          },
+          {
+            "activity": "Get_New_Watermark",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "policy": {
+          "timeout": "01:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 60
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": {
+              "value": "@concat('SELECT * FROM ', pipeline().parameters.source_table, ' WHERE ', pipeline().parameters.watermark_column, ' > ''', activity('Get_Last_Watermark').output.firstRow.last_watermark, ''' AND ', pipeline().parameters.watermark_column, ' <= ''', activity('Get_New_Watermark').output.firstRow.new_watermark, '''')",
+              "type": "Expression"
+            }
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            },
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": true,
+              "fileExtension": ".csv"
+            }
+          },
+          "enableStaging": false
+        },
+        "inputs": [
+          {
+            "referenceName": "ds_azure_sql",
+            "type": "DatasetReference"
+          }
+        ],
+        "outputs": [
+          {
+            "referenceName": "ds_adls_csv_landing",
+            "type": "DatasetReference",
+            "parameters": {
+              "folder_path": {
+                "value": "@concat('inbound/', pipeline().parameters.destination_folder, '/')",
+                "type": "Expression"
+              },
+              "file_name": {
+                "value": "@concat(pipeline().parameters.destination_folder, '_', pipeline().parameters.batch_id, '.csv')",
+                "type": "Expression"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Update_Watermark",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Copy_Incremental_Data",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "policy": {
+          "timeout": "00:05:00",
+          "retry": 1
+        },
+        "typeProperties": {
+          "storedProcedureName": "usp_upsert_watermark",
+          "storedProcedureParameters": {
+            "source_table": {
+              "value": {
+                "value": "@pipeline().parameters.source_table",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "watermark_value": {
+              "value": {
+                "value": "@activity('Get_New_Watermark').output.firstRow.new_watermark",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            }
+          }
+        },
+        "linkedServiceName": {
+          "referenceName": "ls_azure_sql_crm",
+          "type": "LinkedServiceReference"
+        }
+      }
+    ]
+  }
+}

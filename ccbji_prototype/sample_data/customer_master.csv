@@ -1,0 +1,4 @@
+customer_id,customer_name,region,channel,last_modified
+C100,Tokyo Mart,Kanto,Retail,2026-03-14 10:15:00
+C101,Osaka Wholesale,Kansai,Wholesale,2026-03-15 08:05:00
+C102,Sapporo Shop,Hokkaido,Retail,2026-03-16 12:30:00

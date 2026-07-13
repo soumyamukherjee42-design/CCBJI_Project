@@ -1,0 +1,67 @@
+{
+  "name": "PL_TF_Gold_Load",
+  "properties": {
+    "parameters": {
+      "dimension_yml_paths": {"type": "array"},
+      "fact_yml_paths": {"type": "array"},
+      "pipeline_metadata": {"type": "string"}
+    },
+    "activities": [
+      {
+        "name": "Load_Dimensions_In_Parallel",
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {"value": "@pipeline().parameters.dimension_yml_paths", "type": "Expression"},
+          "isSequential": false,
+          "batchCount": 10,
+          "activities": [
+            {
+              "name": "Run_Dimension_Loader",
+              "type": "DatabricksNotebook",
+              "linkedServiceName": {"referenceName": "LS_DATABRICKS", "type": "LinkedServiceReference"},
+              "typeProperties": {
+                "notebookPath": "/Shared/ccbji/transformation/scd2_dimension_loader",
+                "baseParameters": {
+                  "tf_yml_path": {"value": "@item()", "type": "Expression"},
+                  "batch_id": {"value": "@pipeline().parameters.pipeline_metadata", "type": "Expression"}
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Load_Facts_After_Dimensions",
+        "type": "ForEach",
+        "dependsOn": [{"activity": "Load_Dimensions_In_Parallel", "dependencyConditions": ["Succeeded"]}],
+        "typeProperties": {
+          "items": {"value": "@pipeline().parameters.fact_yml_paths", "type": "Expression"},
+          "isSequential": true,
+          "activities": [
+            {
+              "name": "Run_Fact_Loader",
+              "type": "DatabricksNotebook",
+              "linkedServiceName": {"referenceName": "LS_DATABRICKS", "type": "LinkedServiceReference"},
+              "typeProperties": {
+                "notebookPath": "/Shared/ccbji/transformation/fact_sales_loader",
+                "baseParameters": {
+                  "tf_yml_path": {"value": "@item()", "type": "Expression"},
+                  "batch_id": {"value": "@pipeline().parameters.pipeline_metadata", "type": "Expression"}
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Resolve_Late_Arriving_Dimensions",
+        "type": "DatabricksNotebook",
+        "dependsOn": [{"activity": "Load_Facts_After_Dimensions", "dependencyConditions": ["Succeeded"]}],
+        "linkedServiceName": {"referenceName": "LS_DATABRICKS", "type": "LinkedServiceReference"},
+        "typeProperties": {"notebookPath": "/Shared/ccbji/resolution/resolve_late_dimensions"}
+      }
+    ],
+    "folder": {"name": "Transformation"}
+  },
+  "type": "Microsoft.DataFactory/factories/pipelines"
+}

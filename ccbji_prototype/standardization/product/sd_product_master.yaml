@@ -1,0 +1,53 @@
+version: 1.0.0
+meta:
+  dataset_owner: {name: Product Master}
+  function: product
+dataset:
+  identifier:
+    datasetname: product_master
+    loadtype: batch
+    sourcesystem: ProductAPI
+    sourcelayer: landing
+    ingestion_src_path: abfss://inbound@{datalake_name}.dfs.core.windows.net/product/
+    bronze_table: '{catalog_name}.{bronze_schema}.product_master'
+    silver_table: '{catalog_name}.{silver_schema}.product_master'
+    badrecordtable: '{catalog_name}.{silver_schema}.product_master_error'
+    bronze_mode: overwrite
+    silver_mode: append
+    batchIdentifier: batch_id
+    fileformat: csv
+  source:
+    options:
+      header: 'true'
+      sep: ','
+      dateFormat: yyyy-MM-dd
+    columns:
+      - {name: product_id,    dtype: StringType}
+      - {name: product_name,  dtype: StringType}
+      - {name: brand,         dtype: StringType}
+      - {name: category,      dtype: StringType}
+      - {name: status,        dtype: StringType}
+      - {name: effective_date,dtype: DateType}
+  target:
+    columns:
+      - {name: product_id,    standardname: product_id,    transforms: [trim]}
+      - {name: product_name,  standardname: product_name,  transforms: [trim]}
+      - {name: brand,         standardname: brand,         transforms: [trim]}
+      - {name: category,      standardname: category,      transforms: [trim]}
+      - {name: status,        standardname: status,        transforms: [trim, upper]}
+      - {name: effective_date,standardname: effective_date}
+
+  dq:
+    rules:
+      - check: row_count
+        severity: error
+      - check: not_null
+        column: product_id
+        severity: error
+      - check: not_null
+        column: product_name
+        severity: warning
+      - check: allowed_values
+        column: status
+        values: [ACTIVE, INACTIVE, DELISTED]
+        severity: warning

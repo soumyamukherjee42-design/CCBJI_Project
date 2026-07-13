@@ -1,0 +1,117 @@
+{
+  "name": "PL_FILE_To_Landing_Ingestion",
+  "properties": {
+    "description": "Generic pipeline: copies CSV/JSON files from a source linked service into the ADLS landing zone. Triggered by a BlobCreated event or schedule.",
+    "parameters": {
+      "source_folder": {
+        "type": "string",
+        "defaultValue": ""
+      },
+      "file_pattern": {
+        "type": "string",
+        "defaultValue": "*.csv"
+      },
+      "destination_folder": {
+        "type": "string",
+        "defaultValue": ""
+      },
+      "batch_id": {
+        "type": "string",
+        "defaultValue": ""
+      }
+    },
+    "activities": [
+      {
+        "name": "Copy_File_To_Landing",
+        "type": "Copy",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "01:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 60
+        },
+        "typeProperties": {
+          "source": {
+            "type": "DelimitedTextSource",
+            "storeSettings": {
+              "type": "AzureBlobStorageReadSettings",
+              "recursive": false,
+              "wildcardFileName": {
+                "value": "@pipeline().parameters.file_pattern",
+                "type": "Expression"
+              }
+            },
+            "formatSettings": {
+              "type": "DelimitedTextReadSettings"
+            }
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            },
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": true,
+              "fileExtension": ".csv"
+            }
+          },
+          "enableStaging": false
+        },
+        "inputs": [
+          {
+            "referenceName": "ds_adls_csv_source",
+            "type": "DatasetReference",
+            "parameters": {
+              "folder_path": {
+                "value": "@pipeline().parameters.source_folder",
+                "type": "Expression"
+              },
+              "file_name": {
+                "value": "@pipeline().parameters.file_pattern",
+                "type": "Expression"
+              }
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "referenceName": "ds_adls_csv_landing",
+            "type": "DatasetReference",
+            "parameters": {
+              "folder_path": {
+                "value": "@concat('inbound/', pipeline().parameters.destination_folder, '/')",
+                "type": "Expression"
+              },
+              "file_name": {
+                "value": "@concat(pipeline().parameters.destination_folder, '_', pipeline().parameters.batch_id, '.csv')",
+                "type": "Expression"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Log_Ingestion_Success",
+        "type": "WebActivity",
+        "dependsOn": [
+          {
+            "activity": "Copy_File_To_Landing",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "typeProperties": {
+          "url": {
+            "value": "@concat(pipeline().globalParameters.function_base_url, '/api/log_pipeline_run')",
+            "type": "Expression"
+          },
+          "method": "POST",
+          "body": {
+            "value": "@json(concat('{\"pipeline_name\":\"PL_FILE_To_Landing_Ingestion\",\"batch_id\":\"', pipeline().parameters.batch_id, '\",\"status\":\"Succeeded\",\"rows_copied\":', activity('Copy_File_To_Landing').output.rowsCopied, '}'))",
+            "type": "Expression"
+          }
+        }
+      }
+    ]
+  }
+}

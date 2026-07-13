@@ -1,0 +1,26 @@
+version: 1.0.0
+meta:
+  object_type: resolution
+  target_fact: fact_sales
+transformation:
+  fact_table: '{catalog_name}.{gold_schema}.fact_sales'
+  bridge_table: '{catalog_name}.{gold_schema}.late_arriving_dimension_bridge'
+  dimensions:
+    - name: customer
+      table: '{catalog_name}.{gold_schema}.dim_customer'
+      natural_key_dimension: customer_id
+      surrogate_key: customer_key
+      effective_from: effective_from
+      effective_to: effective_to
+    - name: product
+      table: '{catalog_name}.{gold_schema}.dim_product'
+      natural_key_dimension: product_id
+      surrogate_key: product_key
+      effective_from: effective_from
+      effective_to: effective_to
+
+dq:
+  rules:
+    - check: row_count_min
+      min: 0
+      severity: warning

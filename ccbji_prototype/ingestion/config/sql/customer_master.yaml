@@ -1,0 +1,51 @@
+version: 1.0.0
+meta:
+  source_name: customer_master
+  source_type: sql
+  owner_team: data_engineering
+
+source:
+  system: AzureSQL
+  connection: ls_azure_sql_crm
+  database: ccbji_crm
+  schema: dbo
+  table: customers
+  extract_mode: incremental
+  watermark_column: last_modified
+  watermark_table: "{catalog_name}.audit.watermark_log"
+  query: |
+    SELECT
+      customer_id,
+      customer_name,
+      region,
+      channel,
+      last_modified
+    FROM dbo.customers
+    WHERE last_modified > '@{activity(''GetWatermark'').output.firstRow.last_watermark}'
+
+destination:
+  adls_account: "{datalake_name}"
+  container: inbound
+  folder_path: customer/
+  filename_pattern: "customer_master_{batch_id}.csv"
+  format: csv
+
+schedule:
+  type: scheduled
+  trigger: trg_schedule_masterdata_to_silver
+  frequency: daily
+  time: "01:00+09:00"
+
+monitoring:
+  alert_on_failure: true
+  notify_email: data-engineering@ccbji.co.jp
+  log_table: "{catalog_name}.audit.pipeline_run_log"
+
+security:
+  landing_encryption:
+    type: cmk
+    key_vault_name: "{key_vault_name}"
+    key_name: ccbji-adls-cmk
+    secret_scope: ccbji-kv-scope
+    access_identity: adf_managed_identity
+  pii_columns: [customer_name]

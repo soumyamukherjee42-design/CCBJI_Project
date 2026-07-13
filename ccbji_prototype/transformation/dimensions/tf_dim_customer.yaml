@@ -1,0 +1,35 @@
+version: 1.0.0
+meta:
+  object_type: dimension
+  target_name: dim_customer
+  scd_type: 2
+transformation:
+  source_table: '{catalog_name}.{silver_schema}.customer_master'
+  target_table: '{catalog_name}.{gold_schema}.dim_customer'
+  natural_key: customer_id
+  surrogate_key: customer_key
+  tracked_columns: [customer_name, region, channel]
+  effective_from_column: last_modified
+  unknown_member_key: -1
+
+dq:
+  rules:
+    - check: not_null
+      column: customer_key
+      severity: error
+    - check: not_null
+      column: customer_id
+      severity: error
+    - check: not_null
+      column: effective_from
+      severity: error
+    - check: duplicate_key
+      columns: [customer_id, effective_from]
+      severity: error
+
+security:
+  column_masks:
+    - column: customer_name
+      pii_class: full_name
+      mask_function: "{catalog_name}.security.mask_pii_name"
+      exempt_roles: [pii_reader, data_engineer]

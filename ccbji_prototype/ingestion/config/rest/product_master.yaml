@@ -1,0 +1,46 @@
+version: 1.0.0
+meta:
+  source_name: product_master
+  source_type: rest
+  owner_team: data_engineering
+
+source:
+  system: ProductAPI
+  base_url: "https://api.ccbji.co.jp/v1"
+  endpoint: /products
+  method: GET
+  auth_type: oauth2
+  connection: ls_product_api
+  pagination:
+    type: page_number
+    page_param: page
+    size_param: size
+    page_size: 500
+  response_format: json
+  data_path: "$.data"
+
+destination:
+  adls_account: "{datalake_name}"
+  container: inbound
+  folder_path: product/
+  filename_pattern: "product_master_{batch_id}.csv"
+  format: csv
+
+schedule:
+  type: scheduled
+  trigger: trg_schedule_masterdata_to_silver
+  frequency: daily
+  time: "01:00+09:00"
+
+monitoring:
+  alert_on_failure: true
+  notify_email: data-engineering@ccbji.co.jp
+  log_table: "{catalog_name}.audit.pipeline_run_log"
+
+security:
+  landing_encryption:
+    type: cmk
+    key_vault_name: "{key_vault_name}"
+    key_name: ccbji-adls-cmk
+    secret_scope: ccbji-kv-scope
+    access_identity: adf_managed_identity

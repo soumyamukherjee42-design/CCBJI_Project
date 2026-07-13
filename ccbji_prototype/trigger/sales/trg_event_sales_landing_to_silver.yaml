@@ -1,0 +1,38 @@
+version: 1.0.0
+
+meta:
+  trigger_id:  trg_event_sales_landing_to_silver
+  owner_team:  sales
+  description: >
+    Fires on BlobCreated when a daily sales CSV lands in the inbound container.
+    Invokes SD_Standardization_Engine to process Landing → Bronze → Silver.
+    No schedule – purely event-driven; one trigger per file drop.
+
+trigger:
+  name:    TRG_Sales_BlobCreated_To_Silver
+  type:    storage_event
+  enabled: true
+
+  event:
+    type:                   Microsoft.Storage.BlobCreated
+    storage_account:        stccbjiinbounddev
+    container:              inbound
+    blob_path_begins_with:  /sales/
+    blob_path_ends_with:    .csv
+
+  notebook: SD_Standardization_Engine
+  notebook_path: /Shared/ccbji/standardization/SD_Standardization_Engine
+
+  parameters:
+    sd_yml_path:   standardization/config/sd_sales_transactions.yaml
+    batch_id:      "@triggerBody().blobName"       # unique per file, e.g. sales_d1.csv
+    file_filter:   "@triggerBody().fileName"       # restrict read to the landed file only
+    catalog_name:  ccbji_dev
+    bronze_schema: bronze
+    silver_schema: silver
+    datalake_name: stccbjidev
+
+  retry:
+    count:                3
+    interval_seconds:     60
+    timeout_minutes:      30

@@ -1,0 +1,29 @@
+version: 1.0.0
+meta:
+  object_type: dimension
+  target_name: dim_product
+  scd_type: 2
+transformation:
+  source_table: '{catalog_name}.{silver_schema}.product_master'
+  target_table: '{catalog_name}.{gold_schema}.dim_product'
+  natural_key: product_id
+  surrogate_key: product_key
+  tracked_columns: [product_name, brand, category, status]
+  effective_from_column: effective_date
+  unknown_member_key: -1
+
+dq:
+  rules:
+    - check: not_null
+      column: product_key
+      severity: error
+    - check: not_null
+      column: product_id
+      severity: error
+    - check: allowed_values
+      column: status
+      values: [ACTIVE, INACTIVE, DELISTED, UNKNOWN]
+      severity: warning
+    - check: duplicate_key
+      columns: [product_id, effective_from]
+      severity: error

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Databricks
+*.dbc
+.databricks/
+
+# Azure / Terraform state
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Secrets – never commit these
+*.pem
+*.key
+secrets.yaml
+local.settings.json

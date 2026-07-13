@@ -1,0 +1,40 @@
+version: 1.0.0
+meta:
+  source_name: sales_transactions
+  source_type: file
+  owner_team: data_engineering
+
+source:
+  system: SAP
+  format: csv
+  connection: ls_adls_inbound
+  container: inbound
+  folder_path: sales/
+  file_pattern: "*.csv"
+  options:
+    header: true
+    delimiter: ","
+    encoding: UTF-8
+
+destination:
+  adls_account: "{datalake_name}"
+  container: inbound
+  folder_path: sales/
+  preserve_filename: true
+
+schedule:
+  type: event_driven
+  trigger: trg_event_sales_landing_to_silver
+
+monitoring:
+  alert_on_failure: true
+  notify_email: data-engineering@ccbji.co.jp
+  log_table: "{catalog_name}.audit.pipeline_run_log"
+
+security:
+  landing_encryption:
+    type: cmk
+    key_vault_name: "{key_vault_name}"
+    key_name: ccbji-adls-cmk
+    secret_scope: ccbji-kv-scope
+    access_identity: adf_managed_identity

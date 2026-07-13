@@ -1,0 +1,53 @@
+version: 1.0.0
+meta:
+  dataset_owner: {name: Customer Master}
+  function: customer
+dataset:
+  identifier:
+    datasetname: customer_master
+    loadtype: batch
+    sourcesystem: AzureSQL
+    sourcelayer: landing
+    ingestion_src_path: abfss://inbound@{datalake_name}.dfs.core.windows.net/customer/
+    bronze_table: '{catalog_name}.{bronze_schema}.customer_master'
+    silver_table: '{catalog_name}.{silver_schema}.customer_master'
+    badrecordtable: '{catalog_name}.{silver_schema}.customer_master_error'
+    bronze_mode: overwrite
+    silver_mode: append
+    batchIdentifier: batch_id
+    fileformat: csv
+  source:
+    options:
+      header: 'true'
+      sep: ','
+    columns:
+      - {name: customer_id,   dtype: StringType}
+      - {name: customer_name, dtype: StringType}
+      - {name: region,        dtype: StringType}
+      - {name: channel,       dtype: StringType}
+      - {name: last_modified, dtype: TimestampType}
+  target:
+    columns:
+      - {name: customer_id,   standardname: customer_id,   transforms: [trim]}
+      - {name: customer_name, standardname: customer_name, transforms: [trim]}
+      - {name: region,        standardname: region,        transforms: [trim]}
+      - {name: channel,       standardname: channel,       transforms: [trim]}
+      - {name: last_modified, standardname: last_modified}
+
+  dq:
+    rules:
+      - check: row_count
+        severity: error
+      - check: not_null
+        column: customer_id
+        severity: error
+      - check: not_null
+        column: customer_name
+        severity: warning
+
+  security:
+    column_masks:
+      - column: customer_name
+        pii_class: full_name
+        mask_function: "{catalog_name}.security.mask_pii_name"
+        exempt_roles: [pii_reader, data_engineer]

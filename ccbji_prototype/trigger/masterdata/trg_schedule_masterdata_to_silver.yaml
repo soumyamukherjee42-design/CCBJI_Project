@@ -1,0 +1,57 @@
+version: 1.0.0
+
+meta:
+  trigger_id:  trg_schedule_masterdata_to_silver
+  owner_team:  master_data
+  description: >
+    Daily schedule that pulls Customer (Azure SQL incremental watermark) and
+    Product (REST API full extract) master data into Silver.
+    Both run in parallel at 01:00 JST to give ample time before Gold refresh
+    starts at 03:00 JST.
+
+trigger:
+  name:       TRG_Masterdata_Daily_To_Silver
+  type:       schedule
+  enabled:    true
+  timezone:   Asia/Tokyo
+  frequency:  Day
+  interval:   1
+  start_time: '2026-03-17T01:00:00+09:00'   # 01:00 JST daily
+
+  # Both steps share the same start_time and run in parallel
+  steps:
+    - step:       1
+      name:       Ingest_Customer_Master
+      run_order:  parallel
+      notebook:   SD_Standardization_Engine
+      notebook_path: /Shared/ccbji/standardization/SD_Standardization_Engine
+      parameters:
+        sd_yml_path:   standardization/config/sd_customer_master.yaml
+        batch_id:      "@trigger().startTime"    # ISO timestamp used as batch key
+        file_filter:   ""                        # read all files in landing folder
+        catalog_name:  ccbji_dev
+        bronze_schema: bronze
+        silver_schema: silver
+        datalake_name: stccbjidev
+      retry:
+        count:             3
+        interval_seconds:  60
+        timeout_minutes:   30
+
+    - step:       1
+      name:       Ingest_Product_Master
+      run_order:  parallel
+      notebook:   SD_Standardization_Engine
+      notebook_path: /Shared/ccbji/standardization/SD_Standardization_Engine
+      parameters:
+        sd_yml_path:   standardization/config/sd_product_master.yaml
+        batch_id:      "@trigger().startTime"
+        file_filter:   ""
+        catalog_name:  ccbji_dev
+        bronze_schema: bronze
+        silver_schema: silver
+        datalake_name: stccbjidev
+      retry:
+        count:             3
+        interval_seconds:  60
+        timeout_minutes:   30

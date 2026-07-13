@@ -1,0 +1,17 @@
+version: 1.0.0
+meta:
+  object_type: dimension
+  target_name: dim_date
+transformation:
+  target_table: '{catalog_name}.{gold_schema}.dim_date'
+  start_date: '2024-01-01'
+  end_date: '2030-12-31'
+
+dq:
+  rules:
+    - check: row_count_min
+      min: 2557
+      severity: error
+    - check: not_null
+      column: date_key
+      severity: error

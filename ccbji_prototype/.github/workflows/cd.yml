@@ -1,0 +1,217 @@
+name: CD – Deploy to Azure
+
+# Deployment is triggered automatically by branch push (develop→dev, test→test,
+# main→prod) or manually via workflow_dispatch for ad-hoc deploys.
+#
+# Prod deployments require a manual approval gate configured under
+# GitHub → Settings → Environments → prod → Required reviewers.
+
+on:
+  push:
+    branches:
+      - develop
+      - test
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment (dev / test / prod)"
+        required: true
+        type: choice
+        options: [dev, test, prod]
+
+# ── Resolve which environment to target ───────────────────────────────────────
+jobs:
+  resolve-env:
+    name: Resolve target environment
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.pick.outputs.env_name }}
+
+    steps:
+      - id: pick
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "env_name=${{ inputs.environment }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.ref_name }}" = "main" ]; then
+            echo "env_name=prod"    >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.ref_name }}" = "test" ]; then
+            echo "env_name=test"    >> "$GITHUB_OUTPUT"
+          else
+            echo "env_name=dev"     >> "$GITHUB_OUTPUT"
+          fi
+
+  # ── Deployment job ──────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to ${{ needs.resolve-env.outputs.env_name }}
+    needs: resolve-env
+    runs-on: ubuntu-latest
+
+    # Points to the GitHub Environment that holds the per-env secrets.
+    # The prod environment should have Required reviewers set in repo settings.
+    environment: ${{ needs.resolve-env.outputs.env_name }}
+
+    env:
+      ENV_NAME: ${{ needs.resolve-env.outputs.env_name }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install pyyaml pytest
+
+      # ── Gate: re-run CI checks before any deploy ────────────────────────────
+      - name: Run pytest
+        run: pytest tests/ -v
+
+      - name: Validate YAML configs
+        run: python scripts/validate_yamls.py
+
+      - name: Check notebook Python syntax
+        run: |
+          EXIT=0
+          for nb in databricks/notebooks/**/*.py databricks/notebooks/*.py; do
+            [ -f "$nb" ] || continue
+            python -m py_compile "$nb" || EXIT=1
+          done
+          exit $EXIT
+
+      # ── Read non-secret config values from config/env/<env>.yaml ────────────
+      - name: Load environment config
+        id: cfg
+        run: |
+          python - <<'PYEOF'
+          import yaml, os
+          env = os.environ["ENV_NAME"]
+          with open(f"config/env/{env}.yaml") as fh:
+              cfg = yaml.safe_load(fh)
+          out_path = os.environ["GITHUB_OUTPUT"]
+          with open(out_path, "a") as out:
+              for key, val in cfg.items():
+                  if val is not None:
+                      # Collapse multi-line values to a single line
+                      out.write(f"{key}={str(val).strip()}\n")
+          PYEOF
+
+      # ── Databricks: install CLI ─────────────────────────────────────────────
+      - name: Install Databricks CLI
+        run: pip install databricks-cli
+
+      - name: Configure Databricks CLI
+        run: |
+          mkdir -p ~/.databricks
+          cat > ~/.databrickscfg << EOF
+          [DEFAULT]
+          host  = ${{ secrets.DATABRICKS_HOST }}
+          token = ${{ secrets.DATABRICKS_TOKEN }}
+          EOF
+
+      # ── Databricks: deploy notebooks ─────────────────────────────────────────
+      - name: Deploy notebooks to Databricks workspace
+        run: |
+          WORKSPACE_PATH="${{ steps.cfg.outputs.databricks_workspace_path }}"
+          echo "Importing notebooks → ${WORKSPACE_PATH}"
+          databricks workspace mkdirs "${WORKSPACE_PATH}"
+          databricks workspace import-dir \
+            --overwrite \
+            databricks/notebooks \
+            "${WORKSPACE_PATH}"
+
+      # ── Databricks: upload YAML configs to DBFS ──────────────────────────────
+      # Notebooks read YAML files at runtime from DBFS (or Volume).
+      # The full directory tree is mirrored so notebook widget paths stay stable.
+      - name: Upload Standardization YAML configs
+        run: |
+          CONFIG_BASE="${{ steps.cfg.outputs.databricks_config_path }}"
+          databricks fs mkdirs "${CONFIG_BASE}/standardization"
+          databricks fs cp \
+            --recursive --overwrite \
+            standardization \
+            "${CONFIG_BASE}/standardization"
+
+      - name: Upload Transformation YAML configs
+        run: |
+          CONFIG_BASE="${{ steps.cfg.outputs.databricks_config_path }}"
+          databricks fs mkdirs "${CONFIG_BASE}/transformation"
+          databricks fs cp \
+            --recursive --overwrite \
+            transformation \
+            "${CONFIG_BASE}/transformation"
+
+      # ── Azure: log in ────────────────────────────────────────────────────────
+      # AZURE_CREDENTIALS must be a JSON service principal created with:
+      #   az ad sp create-for-rbac --name "ccbji-github-cd" \
+      #     --role contributor --scopes /subscriptions/<id>/resourceGroups/<rg>
+      - name: Log into Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # ── ADF: deploy platform pipelines ───────────────────────────────────────
+      - name: Deploy ADF orchestration pipelines
+        run: |
+          ADF="${{ steps.cfg.outputs.adf_name }}"
+          RG="${{ steps.cfg.outputs.adf_resource_group }}"
+          for json_file in adf/orchestration/*.json; do
+            PIPELINE_NAME=$(python -c \
+              "import json,sys; d=json.load(open('$json_file')); print(d.get('name', '$json_file'))")
+            echo "  → Deploying pipeline: ${PIPELINE_NAME}"
+            az datafactory pipeline create \
+              --factory-name "${ADF}" \
+              --resource-group "${RG}" \
+              --name "${PIPELINE_NAME}" \
+              --pipeline "@${json_file}"
+          done
+
+      # ── ADF: deploy ingestion pipelines ─────────────────────────────────────
+      - name: Deploy ADF ingestion pipelines
+        run: |
+          ADF="${{ steps.cfg.outputs.adf_name }}"
+          RG="${{ steps.cfg.outputs.adf_resource_group }}"
+          for json_file in adf/ingestion/*.json; do
+            PIPELINE_NAME=$(python -c \
+              "import json,sys; d=json.load(open('$json_file')); print(d.get('name', '$json_file'))")
+            echo "  → Deploying pipeline: ${PIPELINE_NAME}"
+            az datafactory pipeline create \
+              --factory-name "${ADF}" \
+              --resource-group "${RG}" \
+              --name "${PIPELINE_NAME}" \
+              --pipeline "@${json_file}"
+          done
+
+      # ── ADF: summarise trigger state (triggers are managed via ADF portal) ───
+      # Our trigger YAMLs (trigger/*.yaml) are the declarative source of truth.
+      # To activate them in ADF, import the corresponding ADF trigger JSON files
+      # into platform/adf/triggers/ and uncomment the step below.
+      #
+      # - name: Deploy and start ADF triggers
+      #   run: |
+      #     ADF="${{ steps.cfg.outputs.adf_name }}"
+      #     RG="${{ steps.cfg.outputs.adf_resource_group }}"
+      #     for json_file in adf/triggers/*.json; do
+      #       TRIGGER_NAME=$(python -c \
+      #         "import json; d=json.load(open('$json_file')); print(d['name'])")
+      #       az datafactory trigger create \
+      #         --factory-name "${ADF}" --resource-group "${RG}" \
+      #         --name "${TRIGGER_NAME}" --properties "@${json_file}"
+      #       az datafactory trigger start \
+      #         --factory-name "${ADF}" --resource-group "${RG}" \
+      #         --name "${TRIGGER_NAME}"
+      #     done
+
+      # ── Deployment summary ───────────────────────────────────────────────────
+      - name: Print deployment summary
+        run: |
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "  Deployment complete"
+          echo "  Environment : ${ENV_NAME}"
+          echo "  ADF         : ${{ steps.cfg.outputs.adf_name }}"
+          echo "  Workspace   : ${{ steps.cfg.outputs.databricks_workspace_path }}"
+          echo "  Config path : ${{ steps.cfg.outputs.databricks_config_path }}"
+          echo "╚══════════════════════════════════════════════════════════════╝"

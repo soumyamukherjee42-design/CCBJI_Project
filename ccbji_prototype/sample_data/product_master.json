@@ -1,0 +1,5 @@
+[
+  {"product_id":"P1001","product_name":"Coca-Cola 500ml","brand":"Coca-Cola","category":"Beverages","status":"ACTIVE","effective_date":"2024-01-01"},
+  {"product_id":"P1002","product_name":"Georgia Coffee 185g","brand":"Georgia","category":"Beverages","status":"ACTIVE","effective_date":"2024-01-01"},
+  {"product_id":"P1003","product_name":"Aquarius 500ml","brand":"Aquarius","category":"Beverages","status":"INACTIVE","effective_date":"2025-07-01"}
+]

@@ -1,0 +1,54 @@
+name: CI – Validate configs & notebooks
+
+# Runs on every pull request targeting a protected branch.
+# Blocks merge if YAML schemas are invalid or any notebook has a syntax error.
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - test
+      - main
+
+jobs:
+  validate:
+    name: Validate YAML configs and notebook syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml pytest
+
+      # ── Unit tests ─────────────────────────────────────────────────────────
+      - name: Run pytest
+        run: pytest tests/ -v
+
+      # ── YAML schema validation ──────────────────────────────────────────────
+      - name: Validate SD / TF / trigger / env YAMLs
+        run: python scripts/validate_yamls.py
+
+      # ── Notebook Python syntax check ────────────────────────────────────────
+      # py_compile detects syntax errors without executing the notebooks.
+      # Databricks-specific names (spark, dbutils, display) are never called at
+      # import time, so this check is safe to run outside a cluster.
+      - name: Check notebook Python syntax
+        run: |
+          EXIT=0
+          for nb in databricks/notebooks/**/*.py databricks/notebooks/*.py; do
+            [ -f "$nb" ] || continue
+            if python -m py_compile "$nb" 2>&1; then
+              echo "  ✓  $nb"
+            else
+              echo "  ✗  $nb  (syntax error)"
+              EXIT=1
+            fi
+          done
+          exit $EXIT

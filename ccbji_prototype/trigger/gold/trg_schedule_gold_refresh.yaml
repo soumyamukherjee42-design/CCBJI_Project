@@ -1,0 +1,126 @@
+version: 1.0.0
+
+meta:
+  trigger_id:  trg_schedule_gold_refresh
+  owner_team:  data_engineering
+  description: >
+    Daily Gold layer refresh pipeline.
+    SLA: all Gold tables available by 06:00 JST.
+    Starts at 03:00 JST, allowing 3 hours for end-to-end completion.
+    Sequence enforces: DimDate → Dims (parallel) → Fact → Resolve.
+
+trigger:
+  name:       TRG_Gold_Daily_Refresh
+  type:       schedule
+  enabled:    true
+  timezone:   Asia/Tokyo
+  frequency:  Day
+  interval:   1
+  start_time: '2026-03-17T03:00:00+09:00'   # 03:00 JST  →  SLA target 06:00 JST
+
+  # Upstream dependency: masterdata Silver load must succeed first
+  depends_on:
+    - trigger: TRG_Masterdata_Daily_To_Silver
+      status:  Succeeded
+    # Sales Silver is event-driven; Gold accepts late-arriving rows via bridge
+
+  # ── Loading sequence ──────────────────────────────────────────────────────
+  # Steps with the same step number run in PARALLEL.
+  # A step only starts after all notebooks in the previous step number succeed.
+
+  sequence:
+
+    # ── Step 1: Date dimension (idempotent full overwrite, no Silver dependency) ──
+    - step:        1
+      name:        Refresh_DimDate
+      run_order:   sequential
+      notebook:    TF_Gold_Load_Engine
+      notebook_path: /Shared/ccbji/transformation/TF_Gold_Load_Engine
+      parameters:
+        tf_yml_path:   transformation/config/dimensions/tf_dim_date.yaml
+        batch_id:      "@trigger().startTime"
+        catalog_name:  ccbji_dev
+        silver_schema: silver
+        gold_schema:   gold
+      retry:
+        count:             2
+        interval_seconds:  120
+        timeout_minutes:   20
+
+    # ── Step 2: SCD2 dimensions in parallel (depend on step 1 completing) ──────
+    - step:        2
+      name:        Refresh_DimCustomer
+      run_order:   parallel
+      depends_on_step: 1
+      notebook:    TF_Gold_Load_Engine
+      notebook_path: /Shared/ccbji/transformation/TF_Gold_Load_Engine
+      parameters:
+        tf_yml_path:   transformation/config/dimensions/tf_dim_customer.yaml
+        batch_id:      "@trigger().startTime"
+        catalog_name:  ccbji_dev
+        silver_schema: silver
+        gold_schema:   gold
+      retry:
+        count:             3
+        interval_seconds:  60
+        timeout_minutes:   30
+
+    - step:        2
+      name:        Refresh_DimProduct
+      run_order:   parallel
+      depends_on_step: 1
+      notebook:    TF_Gold_Load_Engine
+      notebook_path: /Shared/ccbji/transformation/TF_Gold_Load_Engine
+      parameters:
+        tf_yml_path:   transformation/config/dimensions/tf_dim_product.yaml
+        batch_id:      "@trigger().startTime"
+        catalog_name:  ccbji_dev
+        silver_schema: silver
+        gold_schema:   gold
+      retry:
+        count:             3
+        interval_seconds:  60
+        timeout_minutes:   30
+
+    # ── Step 3: Fact sales (after ALL step-2 dims succeed) ───────────────────
+    - step:        3
+      name:        Load_FactSales
+      run_order:   sequential
+      depends_on_step: 2
+      notebook:    TF_Gold_Load_Engine
+      notebook_path: /Shared/ccbji/transformation/TF_Gold_Load_Engine
+      parameters:
+        tf_yml_path:   transformation/config/facts/tf_fact_sales.yaml
+        batch_id:      "@trigger().startTime"
+        catalog_name:  ccbji_dev
+        silver_schema: silver
+        gold_schema:   gold
+      retry:
+        count:             3
+        interval_seconds:  60
+        timeout_minutes:   60
+
+    # ── Step 4: Late-arriving dimension resolution (after fact load) ─────────
+    - step:        4
+      name:        Resolve_Late_Dimensions
+      run_order:   sequential
+      depends_on_step: 3
+      notebook:    TF_Resolve_Late_Dimensions
+      notebook_path: /Shared/ccbji/transformation/TF_Resolve_Late_Dimensions
+      parameters:
+        tf_resolve_yml_path: transformation/config/facts/tf_resolve_fact_sales.yaml
+        catalog_name:        ccbji_dev
+        silver_schema:       silver
+        gold_schema:         gold
+      retry:
+        count:             2
+        interval_seconds:  60
+        timeout_minutes:   30
+
+  # ── Monitoring & alerting ─────────────────────────────────────────────────
+  monitoring:
+    sla_time:             '06:00+09:00'
+    alert_on_failure:     true
+    alert_on_sla_breach:  true
+    notify_email:         data-engineering@ccbji.co.jp
+    log_table:            ccbji_dev.audit.pipeline_run_log

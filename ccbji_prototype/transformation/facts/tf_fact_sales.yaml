@@ -1,0 +1,57 @@
+version: 1.0.0
+meta:
+  object_type: fact
+  target_name: fact_sales
+transformation:
+  source_table: '{catalog_name}.{silver_schema}.sales_transactions'
+  target_table: '{catalog_name}.{gold_schema}.fact_sales'
+  late_bridge_table: '{catalog_name}.{gold_schema}.late_arriving_dimension_bridge'
+  transaction_id_column: sales_id
+  transaction_date_column: order_date
+  transaction_hash_columns: [source_system, sales_id, order_date]
+  dimensions:
+    - name: customer
+      table: '{catalog_name}.{gold_schema}.dim_customer'
+      natural_key_source: customer_id
+      natural_key_dimension: customer_id
+      surrogate_key: customer_key
+      effective_from: effective_from
+      effective_to: effective_to
+      unknown_key: -1
+    - name: product
+      table: '{catalog_name}.{gold_schema}.dim_product'
+      natural_key_source: product_id
+      natural_key_dimension: product_id
+      surrogate_key: product_key
+      effective_from: effective_from
+      effective_to: effective_to
+      unknown_key: -1
+  measures: [quantity, net_amount]
+  degenerate_columns: [sales_id, currency, source_system, batch_id]
+
+dq:
+  rules:
+    - check: not_null
+      column: transaction_hash
+      severity: error
+    - check: not_null
+      column: date_key
+      severity: error
+    - check: not_negative
+      column: net_amount
+      severity: warning
+    - check: zero_check
+      column: quantity
+      severity: warning
+    - check: referential_integrity
+      column: customer_key
+      ref_table: '{catalog_name}.{gold_schema}.dim_customer'
+      ref_column: customer_key
+      unknown_key: -1
+      severity: warning
+    - check: referential_integrity
+      column: product_key
+      ref_table: '{catalog_name}.{gold_schema}.dim_product'
+      ref_column: product_key
+      unknown_key: -1
+      severity: warning

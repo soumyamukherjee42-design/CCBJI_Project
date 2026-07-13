@@ -1,0 +1,27 @@
+{
+  "name": "PL_SD_Standardisation",
+  "properties": {
+    "parameters": {
+      "yml_path": {"type": "string"},
+      "env_parameters": {"type": "string"},
+      "project_name": {"type": "string"},
+      "pipeline_metadata": {"type": "string"}
+    },
+    "activities": [
+      {
+        "name": "Run_Generic_Standardisation",
+        "type": "DatabricksNotebook",
+        "linkedServiceName": {"referenceName": "LS_DATABRICKS", "type": "LinkedServiceReference"},
+        "typeProperties": {
+          "notebookPath": "/Shared/ccbji/standardization/run_standardization",
+          "baseParameters": {
+            "sd_yml_path": {"value": "@pipeline().parameters.yml_path", "type": "Expression"},
+            "pipeline_run_id": {"value": "@pipeline().parameters.pipeline_metadata", "type": "Expression"}
+          }
+        }
+      }
+    ],
+    "folder": {"name": "Standardization"}
+  },
+  "type": "Microsoft.DataFactory/factories/pipelines"
+}
