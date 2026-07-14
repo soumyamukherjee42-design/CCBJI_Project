@@ -47,29 +47,8 @@ The three notebooks that drive all data movement are **fully generic** — they 
 ## 2. Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│  SOURCES                  │  INGEST (ADF)          │  DATABRICKS MEDALLION       │
-│                           │                        │                             │
-│  SAP ──── CSV ────────────┼── BlobCreated event ───┼──▶ Bronze  (overwrite)      │
-│  Azure SQL ───────────────┼── Schedule + watermark ┼──▶ Bronze ──▶ Silver(append)│
-│  REST API ────────────────┼── Schedule + paginate  ┼──▶ Bronze                  │
-│                           │                        │         │                   │
-│  [ADLS Landing encrypted  │                        │         ▼  DQ checks run    │
-│   with CMK via Key Vault] │  ADF Schedule (03:00)  │      Gold Star Schema ★     │
-│                           │  ─────────────────── ─ │      dim_date               │
-│                           │                        │      dim_customer  (SCD2)   │
-│                           │                        │      dim_product   (SCD2)   │
-│                           │                        │      fact_sales             │
-│                           │                        │      late_arriving_bridge   │
-│                           │                        │                             │
-│                           │                        │  Unity Catalog              │
-│                           │                        │  Column Mask policies       │
-│                           │                        │  (customer_name → PII role) │
-│                           │                        │                             │
-│                           │                        │  Audit / Observability      │
-│                           │                        │  pipeline_run_log           │
-│                           │                        │  dq_check_log               │
-│                           │                        │  alert_log                  │
+<img width="2303" height="1056" alt="HLD drawio" src="https://github.com/user-attachments/assets/6b345b77-249a-4f45-8c53-13c0599fec47" />
+
 └──────────────────────────────────────────────────────────────────────────────────┘
 ```
 
