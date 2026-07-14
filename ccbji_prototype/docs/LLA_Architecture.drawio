@@ -1,295 +1,680 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="1654" math="0" shadow="1">
+<mxGraphModel dx="1300" dy="700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="1500" math="0" shadow="0">
   <root>
-    <mxCell id="0" />
-    <mxCell id="1" parent="0" />
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
 
-    <!-- ═══ TITLE ═══════════════════════════════════════════════════════════════ -->
-    <mxCell id="title" value="Low Level Architecture — CCBJI Data Engineering Platform (Medallion / Config-Driven)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
-      <mxGeometry x="20" y="10" width="2280" height="40" as="geometry" />
+    <!-- ═══ TITLE ═══════════════════════════════════════════════════════════ -->
+    <mxCell id="title" value="LOW LEVEL ARCHITECTURE  (Technical View)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="0" y="10" width="2339" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="subtitle" value="CCBJI Azure Data Engineering Platform — Config-Driven Medallion Pipeline (SD Engine + TF Engine)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontStyle=2;fontColor=#4472C4;" vertex="1" parent="1">
+      <mxGeometry x="0" y="46" width="2339" height="20" as="geometry"/>
     </mxCell>
 
-    <!-- ═══ CONFIG BAND ════════════════════════════════════════════════════════ -->
-    <mxCell id="z_cfg" value="Config Layer — YAML-Driven, Zero-Code Extension" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalAlign=top;" vertex="1" parent="1">
-      <mxGeometry x="20" y="60" width="2280" height="120" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 1: DATA SOURCES
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s1" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#F3F7FF;strokeColor=#4472C4;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="20" y="72" width="270" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s1" value="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="137" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s1" value="DATA SOURCES" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="20" y="120" width="270" height="22" as="geometry"/>
     </mxCell>
 
-    <mxCell id="c_sd" value="&lt;b&gt;SD YAML&lt;/b&gt;&lt;br/&gt;source / dataset / transforms&lt;br/&gt;dq / security / ingestion" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="95" width="190" height="65" as="geometry" />
+    <mxCell id="s1_sql_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.sql_database;" vertex="1" parent="1">
+      <mxGeometry x="110" y="162" width="52" height="52" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_sql_bg" value="" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#DDEEFF;strokeColor=#4472C4;" vertex="1" parent="1">
+      <mxGeometry x="36" y="224" width="238" height="68" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_sql_lb" value="&lt;b&gt;Azure SQL DB&lt;/b&gt;&lt;br/&gt;Customer (customer_master)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="36" y="232" width="238" height="52" as="geometry"/>
     </mxCell>
 
-    <mxCell id="c_tf" value="&lt;b&gt;TF YAML&lt;/b&gt;&lt;br/&gt;object_type / source / target&lt;br/&gt;scd_type / dq / security" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="250" y="95" width="190" height="65" as="geometry" />
+    <mxCell id="div_s1a" value="" style="line;html=1;strokeColor=#4472C4;" vertex="1" parent="1">
+      <mxGeometry x="50" y="304" width="210" height="10" as="geometry"/>
     </mxCell>
 
-    <mxCell id="c_ing" value="&lt;b&gt;Ingestion YAML&lt;/b&gt;&lt;br/&gt;trigger_schedule&lt;br/&gt;source_path / adf_pipeline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="460" y="95" width="190" height="65" as="geometry" />
+    <mxCell id="s1_api_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.api_management_services;" vertex="1" parent="1">
+      <mxGeometry x="110" y="330" width="52" height="52" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_api_bg" value="" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#DDEEFF;strokeColor=#4472C4;" vertex="1" parent="1">
+      <mxGeometry x="36" y="392" width="238" height="68" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_api_lb" value="&lt;b&gt;REST API&lt;/b&gt;&lt;br/&gt;Product (product_master)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="36" y="400" width="238" height="52" as="geometry"/>
     </mxCell>
 
-    <mxCell id="c_env" value="&lt;b&gt;Env YAML&lt;/b&gt;&lt;br/&gt;{catalog_name}&lt;br/&gt;{datalake_name}&lt;br/&gt;{bronze/silver/gold_schema}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="670" y="95" width="190" height="65" as="geometry" />
+    <mxCell id="div_s1b" value="" style="line;html=1;strokeColor=#4472C4;" vertex="1" parent="1">
+      <mxGeometry x="50" y="472" width="210" height="10" as="geometry"/>
     </mxCell>
 
-    <mxCell id="c_tok" value="&lt;b&gt;_apply_tokens()&lt;/b&gt;&lt;br/&gt;Substitutes {catalog_name}, {datalake_name},&lt;br/&gt;{bronze_schema}, {silver_schema}, {gold_schema}&lt;br/&gt;into all table names / paths in YAML" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="900" y="85" width="290" height="75" as="geometry" />
+    <mxCell id="s1_csv_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#107C10;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.storage_accounts;" vertex="1" parent="1">
+      <mxGeometry x="110" y="498" width="52" height="52" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_csv_bg" value="" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#E6F4E6;strokeColor=#107C10;" vertex="1" parent="1">
+      <mxGeometry x="36" y="560" width="238" height="68" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_csv_lb" value="&lt;b&gt;CSV File&lt;/b&gt;&lt;br/&gt;Sales Transactions (sales_transactions)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="36" y="568" width="238" height="52" as="geometry"/>
     </mxCell>
 
-    <mxCell id="c_disp" value="&lt;b&gt;Engine Dispatch&lt;/b&gt;&lt;br/&gt;dataset_type → SD_Standardization_Engine&lt;br/&gt;object_type=dimension (no scd) → Dim Date Engine&lt;br/&gt;object_type=dimension (scd_type=2) → SCD2 Engine&lt;br/&gt;object_type=fact → Fact Engine&lt;br/&gt;object_type=resolution → Resolution Engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1220" y="75" width="330" height="95" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 2: INGESTION (ADF PIPELINES)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s2" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EBF5FF;strokeColor=#0078D4;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="300" y="72" width="290" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s2" value="2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="432" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s2" value="INGESTION (ADF PIPELINES)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=10;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="300" y="120" width="290" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_adf_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.adf;" vertex="1" parent="1">
+      <mxGeometry x="425" y="147" width="40" height="40" as="geometry"/>
     </mxCell>
 
-    <!-- config → _apply_tokens -->
-    <mxCell id="e_csd_tok"  style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="c_sd"  target="c_tok" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="e_ctf_tok"  style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="c_tf"  target="c_tok" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="e_cing_tok" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="c_ing" target="c_tok" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="e_cenv_tok" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="c_env" target="c_tok" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="e_tok_disp" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;" edge="1" source="c_tok" target="c_disp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <!-- Pipeline 1: SQL -->
+    <mxCell id="s2_p1" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="312" y="200" width="266" height="155" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p1h" value="PL_SQL_To_Landing_Ingestion" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontColor=#ffffff;fontSize=8;" vertex="1" parent="1">
+      <mxGeometry x="312" y="205" width="266" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p1_a1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.sql_database;" vertex="1" parent="1">
+      <mxGeometry x="320" y="230" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p1_a1l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Lookup&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="310" y="268" width="54" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p1_a2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.sql_server;" vertex="1" parent="1">
+      <mxGeometry x="383" y="230" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p1_a2l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Stored Proc&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="370" y="268" width="60" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p1_a3" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.adf;" vertex="1" parent="1">
+      <mxGeometry x="446" y="230" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p1_a3l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Copy&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="436" y="268" width="54" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p1_a4" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.function_apps;" vertex="1" parent="1">
+      <mxGeometry x="509" y="230" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p1_a4l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Param Path&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="497" y="268" width="60" height="16" as="geometry"/></mxCell>
+    <mxCell id="a_p1_12" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p1_a1" target="s2_p1_a2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="a_p1_23" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p1_a2" target="s2_p1_a3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="a_p1_34" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p1_a3" target="s2_p1_a4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
 
-    <!-- ═══ SD ENGINE (left column) ══════════════════════════════════════════ -->
-    <mxCell id="z_sd" value="SD_Standardization_Engine  —  Source → Bronze → Silver" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;fontStyle=1;fontSize=11;verticalAlign=top;" vertex="1" parent="1">
-      <mxGeometry x="20" y="200" width="580" height="1070" as="geometry" />
+    <!-- Pipeline 2: REST -->
+    <mxCell id="s2_p2" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="312" y="368" width="266" height="155" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p2h" value="PL_REST_To_Landing_Ingestion" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontColor=#ffffff;fontSize=8;" vertex="1" parent="1">
+      <mxGeometry x="312" y="373" width="266" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p2_a1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.sql_database;" vertex="1" parent="1">
+      <mxGeometry x="320" y="398" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p2_a1l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Lookup&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="310" y="436" width="54" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p2_a2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.api_management_services;" vertex="1" parent="1">
+      <mxGeometry x="383" y="398" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p2_a2l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Web Activity&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="370" y="436" width="60" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p2_a3" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.adf;" vertex="1" parent="1">
+      <mxGeometry x="446" y="398" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p2_a3l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Copy&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="436" y="436" width="54" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p2_a4" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.function_apps;" vertex="1" parent="1">
+      <mxGeometry x="509" y="398" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p2_a4l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Param Path&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="497" y="436" width="60" height="16" as="geometry"/></mxCell>
+    <mxCell id="a_p2_12" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p2_a1" target="s2_p2_a2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="a_p2_23" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p2_a2" target="s2_p2_a3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="a_p2_34" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p2_a3" target="s2_p2_a4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Pipeline 3: File -->
+    <mxCell id="s2_p3" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="312" y="536" width="266" height="155" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p3h" value="PL_FILE_To_Landing_Ingestion" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontColor=#ffffff;fontSize=8;" vertex="1" parent="1">
+      <mxGeometry x="312" y="541" width="266" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p3_a1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.sql_database;" vertex="1" parent="1">
+      <mxGeometry x="320" y="566" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p3_a1l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Lookup&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="310" y="604" width="54" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p3_a2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.storage_accounts;" vertex="1" parent="1">
+      <mxGeometry x="383" y="566" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p3_a2l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Get Metadata&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="370" y="604" width="60" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p3_a3" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.adf;" vertex="1" parent="1">
+      <mxGeometry x="446" y="566" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p3_a3l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Copy&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="436" y="604" width="54" height="16" as="geometry"/></mxCell>
+    <mxCell id="s2_p3_a4" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#00A4EF;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.function_apps;" vertex="1" parent="1">
+      <mxGeometry x="509" y="566" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_p3_a4l" value="&lt;font color='#BDD7EE' style='font-size:7px'&gt;Param Path&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1"><mxGeometry x="497" y="604" width="60" height="16" as="geometry"/></mxCell>
+    <mxCell id="a_p3_12" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p3_a1" target="s2_p3_a2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="a_p3_23" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p3_a2" target="s2_p3_a3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="a_p3_34" style="html=1;strokeColor=#BDD7EE;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="s2_p3_a3" target="s2_p3_a4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Storage Event Trigger note -->
+    <mxCell id="s2_ev_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF8C00;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.function_apps;" vertex="1" parent="1">
+      <mxGeometry x="425" y="720" width="40" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_ev_lb" value="&lt;b&gt;Storage Event&lt;/b&gt;&lt;br/&gt;(ADLS Gen2) Trigger" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="330" y="765" width="230" height="36" as="geometry"/>
     </mxCell>
 
-    <!-- SD 1 -->
-    <mxCell id="s1" value="&lt;b&gt;1. ADF Trigger / Read ADLS CSV&lt;/b&gt;&lt;br/&gt;Storage Event Trigger on inbound/{source}/&lt;br/&gt;pipeline_run_id passed as batch_id&lt;br/&gt;spark.read.csv (schema-on-read)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="235" width="540" height="65" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 3: LANDING (ADLS GEN2)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s3" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#00B050;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="600" y="72" width="272" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s3" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00B050;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="718" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s3" value="LANDING (ADLS GEN2)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=10;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="600" y="120" width="272" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_adls_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.datalake_store;" vertex="1" parent="1">
+      <mxGeometry x="712" y="148" width="44" height="44" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_adls_lb" value="ADLS Gen2" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontStyle=1;fontColor=#00702F;" vertex="1" parent="1">
+      <mxGeometry x="665" y="195" width="140" height="16" as="geometry"/>
     </mxCell>
 
-    <!-- SD 2 -->
-    <mxCell id="s2" value="&lt;b&gt;2. Write Bronze Delta  (overwrite)&lt;/b&gt;&lt;br/&gt;spark.write.format('delta').mode('overwrite')&lt;br/&gt;Adds batch_id + processed_date (UTC)&lt;br/&gt;Partitioned by batch_id; each run replaces prior snapshot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="315" width="540" height="70" as="geometry" />
+    <!-- Landing folder structure -->
+    <mxCell id="s3_path_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#00B050;" vertex="1" parent="1">
+      <mxGeometry x="616" y="220" width="240" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_path_lb" value="&lt;b&gt;/landing/&lt;source&gt;/&lt;object&gt;/&lt;/b&gt;&lt;br/&gt;(YYYY/MM/DD/HH)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#00702F;" vertex="1" parent="1">
+      <mxGeometry x="616" y="228" width="240" height="34" as="geometry"/>
     </mxCell>
 
-    <!-- SD 3 -->
-    <mxCell id="s3" value="&lt;b&gt;3. Column Mask — Bronze&lt;/b&gt;&lt;br/&gt;_apply_column_masks(bronze_table)&lt;br/&gt;ALTER TABLE … ALTER COLUMN … SET MASK&lt;br/&gt;Graceful skip when CE/non-UC environment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="400" width="540" height="65" as="geometry" />
+    <!-- Customer Master folder -->
+    <mxCell id="s3_f1_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.sql_database;" vertex="1" parent="1">
+      <mxGeometry x="617" y="290" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_f1_lb" value="&lt;b&gt;customer_master/&lt;/b&gt;&lt;br/&gt;dt=YYYYMMDD/*.csv" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="658" y="296" width="190" height="34" as="geometry"/>
     </mxCell>
 
-    <!-- SD 4 -->
-    <mxCell id="s4" value="&lt;b&gt;4. Config-Driven Transforms&lt;/b&gt;&lt;br/&gt;trim: strip whitespace from STRING cols&lt;br/&gt;upper: uppercase STRING cols&lt;br/&gt;cast: type-safe column cast (e.g. STRING→DATE)&lt;br/&gt;add_column: derived column from Spark expression&lt;br/&gt;SHA-256 transaction_hash computed here" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="480" width="540" height="85" as="geometry" />
+    <!-- Product Master folder -->
+    <mxCell id="s3_f2_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.api_management_services;" vertex="1" parent="1">
+      <mxGeometry x="617" y="345" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_f2_lb" value="&lt;b&gt;product_master/&lt;/b&gt;&lt;br/&gt;dt=YYYYMMDD/*.json" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="658" y="351" width="190" height="34" as="geometry"/>
     </mxCell>
 
-    <!-- SD 5 DQ box -->
-    <mxCell id="s5bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-      <mxGeometry x="40" y="580" width="540" height="200" as="geometry" />
+    <!-- Sales folder -->
+    <mxCell id="s3_f3_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#107C10;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.storage_accounts;" vertex="1" parent="1">
+      <mxGeometry x="617" y="400" width="34" height="34" as="geometry"/>
     </mxCell>
-    <mxCell id="s5h" value="&lt;b&gt;5. SD DQ Checks — 5 check types (config-driven)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="52" y="585" width="516" height="20" as="geometry" />
-    </mxCell>
-    <mxCell id="s5_rc"  value="row_count — total rows ≥ min_rows" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="52" y="610" width="248" height="28" as="geometry" /></mxCell>
-    <mxCell id="s5_nn"  value="not_null — column value must exist" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="312" y="610" width="248" height="28" as="geometry" /></mxCell>
-    <mxCell id="s5_neg" value="not_negative — numeric column ≥ 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="52" y="648" width="248" height="28" as="geometry" /></mxCell>
-    <mxCell id="s5_av"  value="allowed_values — value in permitted set" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="312" y="648" width="248" height="28" as="geometry" /></mxCell>
-    <mxCell id="s5_rx"  value="regex — column matches pattern" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="52" y="686" width="248" height="28" as="geometry" /></mxCell>
-    <mxCell id="s5_sv"  value="severity=error → row rejected to *_error table  |  severity=warning → logged only, row passes" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;" vertex="1" parent="1"><mxGeometry x="52" y="724" width="512" height="20" as="geometry" /></mxCell>
-    <mxCell id="s5_note" value="Row-level split: good rows → Silver append  |  bad rows → *_error table (permanent)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;" vertex="1" parent="1"><mxGeometry x="52" y="748" width="512" height="20" as="geometry" /></mxCell>
-
-    <!-- SD 6a good rows -->
-    <mxCell id="s6a" value="&lt;b&gt;6a. Silver Write — Good Rows&lt;/b&gt;&lt;br/&gt;mode='append'; partitioned by batch_id&lt;br/&gt;Full history retained across all batches" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="795" width="255" height="65" as="geometry" />
+    <mxCell id="s3_f3_lb" value="&lt;b&gt;sales_transactions/&lt;/b&gt;&lt;br/&gt;dt=YYYYMMDD/*.csv" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="658" y="406" width="190" height="34" as="geometry"/>
     </mxCell>
 
-    <!-- SD 6b error rows -->
-    <mxCell id="s6b" value="&lt;b&gt;6b. Error Table — Rejected Rows&lt;/b&gt;&lt;br/&gt;silver.*_error; adds error_reason&lt;br/&gt;+ error_timestamp; never deleted" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="325" y="795" width="255" height="65" as="geometry" />
+    <!-- Event trigger badge -->
+    <mxCell id="s3_evt_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF8C00;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.function_apps;" vertex="1" parent="1">
+      <mxGeometry x="712" y="480" width="44" height="44" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_evt_lb" value="Storage Event&lt;br/&gt;(ADLS Gen2)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#FF8C00;" vertex="1" parent="1">
+      <mxGeometry x="660" y="528" width="148" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_note" value="&lt;font color='#00702F' style='font-size:9px'&gt;&lt;b&gt;Immutable raw landing&lt;/b&gt;&lt;br/&gt;Raw files as received&lt;br/&gt;No transformation at this layer&lt;br/&gt;Trigger fires on file arrival&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="616" y="575" width="240" height="80" as="geometry"/>
     </mxCell>
 
-    <!-- SD 7 -->
-    <mxCell id="s7" value="&lt;b&gt;7. Column Mask — Silver&lt;/b&gt;&lt;br/&gt;_apply_column_masks(silver_table)&lt;br/&gt;Same mask functions applied at Silver layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="875" width="540" height="55" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 4: STANDARDIZATION (DATABRICKS)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s4" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF8C00;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="882" y="72" width="272" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s4" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s4" value="STANDARDIZATION (DATABRICKS)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="882" y="120" width="272" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4_dbx_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF3621;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_databricks;" vertex="1" parent="1">
+      <mxGeometry x="994" y="148" width="44" height="44" as="geometry"/>
     </mxCell>
 
-    <!-- SD 8 -->
-    <mxCell id="s8" value="&lt;b&gt;8. Audit Write&lt;/b&gt;&lt;br/&gt;_audit_log() → audit.pipeline_run_log (status, rows_read/written/rejected, duration)&lt;br/&gt;_dq_log() → audit.dq_check_log (per-check: PASSED/FAILED, rows_checked/failed)&lt;br/&gt;_alert_log() → audit.alert_log on error-severity DQ failures" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="945" width="540" height="75" as="geometry" />
+    <!-- Notebook box -->
+    <mxCell id="s4_nb_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FF3621;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="898" y="205" width="240" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4_nb_lb" value="&lt;font color='#ffffff' style='font-size:9px;font-weight:bold'&gt;Notebook: SD_Standardization_Engine.py&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="898" y="210" width="240" height="20" as="geometry"/>
     </mxCell>
 
-    <!-- SD flow -->
-    <mxCell id="es12" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;" edge="1" source="s1" target="s2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es23" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;" edge="1" source="s2" target="s3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es34" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;" edge="1" source="s3" target="s4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es45" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="s4" target="s5bg" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es56a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" source="s5bg" target="s6a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es56b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" source="s5bg" target="s6b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es6a7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;" edge="1" source="s6a" target="s7" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es6b7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;" edge="1" source="s6b" target="s7" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="es78"  style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;" edge="1" source="s7" target="s8" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-
-    <!-- ═══ TF ENGINE (middle column) ════════════════════════════════════════ -->
-    <mxCell id="z_tf2" value="TF_Gold_Load_Engine  —  Silver → Gold" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;fontStyle=1;fontSize=11;verticalAlign=top;" vertex="1" parent="1">
-      <mxGeometry x="620" y="200" width="1060" height="1070" as="geometry" />
+    <!-- Steps -->
+    <mxCell id="s4_steps_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FF8C00;" vertex="1" parent="1">
+      <mxGeometry x="898" y="248" width="240" height="220" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4_steps_lb" value="&lt;b&gt;Steps:&lt;/b&gt;&lt;br/&gt;1. Read SD YAML (Per Table)&lt;br/&gt;2. Read ADLS CSV → DataFrame&lt;br/&gt;3. Create/Overwrite Bronze Delta&lt;br/&gt;4. Apply Column Masks (Bronze)&lt;br/&gt;5. Run Transforms (trim/upper/cast)&lt;br/&gt;6. Run DQ Checks (5 types)&lt;br/&gt;7. Append Silver (good rows)&lt;br/&gt;8. Append *_error (rejected rows)&lt;br/&gt;9. Apply Column Masks (Silver)&lt;br/&gt;10. Write Audit Logs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="906" y="256" width="224" height="204" as="geometry"/>
     </mxCell>
 
-    <!-- TF 1 Route -->
-    <mxCell id="t1" value="&lt;b&gt;1. Route by object_type&lt;/b&gt;&lt;br/&gt;Read YAML cfg → detect object_type → dispatch to sub-engine&lt;br/&gt;Reads token-substituted table names / paths from cfg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="640" y="235" width="1020" height="60" as="geometry" />
+    <!-- SD YAML detail -->
+    <mxCell id="s4_yaml_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF8C00;" vertex="1" parent="1">
+      <mxGeometry x="898" y="482" width="240" height="200" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4_yaml_hdr" value="SD YAML (Per Table)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#FF8C00;" vertex="1" parent="1">
+      <mxGeometry x="898" y="488" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4_yaml_lb" value="• source: ADLS path / schema&lt;br/&gt;• dataset: target Bronze + Silver&lt;br/&gt;• transforms: trim / upper / cast&lt;br/&gt;• dq.rules: check / column / severity&lt;br/&gt;• security.column_masks: PII cols&lt;br/&gt;&lt;br/&gt;&lt;b&gt;DQ Check Types (5):&lt;/b&gt;&lt;br/&gt;row_count · not_null · not_negative&lt;br/&gt;allowed_values · regex" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="906" y="512" width="224" height="162" as="geometry"/>
     </mxCell>
 
-    <!-- TF 2a Dim Date -->
-    <mxCell id="t2a" value="&lt;b&gt;2a. Dim Date Engine (full overwrite)&lt;/b&gt;&lt;br/&gt;Generates date_key (yyyyMMdd INT), calendar_date, year,&lt;br/&gt;quarter, month, month_name, week_of_year,&lt;br/&gt;day_of_week, day_name, is_weekend&lt;br/&gt;date_range from source config; mode='overwrite'" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="640" y="315" width="490" height="85" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 5: STORAGE ZONES (ADLS GEN2 - DELTA)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s5" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#555555;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="1164" y="72" width="272" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s5" value="5" style="ellipse;whiteSpace=wrap;html=1;fillColor=#555555;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1282" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s5" value="STORAGE ZONES (ADLS GEN2 — DELTA)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1164" y="120" width="272" height="22" as="geometry"/>
     </mxCell>
 
-    <!-- TF 2b SCD2 -->
-    <mxCell id="t2b" value="&lt;b&gt;2b. SCD Type 2 Engine&lt;/b&gt;&lt;br/&gt;SHA-256(tracked cols) → attribute_hash&lt;br/&gt;Compare hash to current dim row (is_current=true)&lt;br/&gt;New record: INSERT with SK, effective_from=today, effective_to=9999-12-31&lt;br/&gt;Changed: expire current (effective_to=today-1, is_current=false) + INSERT new&lt;br/&gt;Sentinel: surrogate_key=-1, natural_key=UNKNOWN, eff 1900–9999" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1150" y="315" width="510" height="105" as="geometry" />
+    <!-- BRONZE column -->
+    <mxCell id="s5_brnz_bg" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#C55A11;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="150" width="240" height="200" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_brnz_hdr" value="BRONZE" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="157" width="240" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_brnz_sub" value="(Source Aligned)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;fontColor=#FFD7A8;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="178" width="240" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_brnz_ic" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#FF8000;strokeColor=#843C0B;" vertex="1" parent="1">
+      <mxGeometry x="1264" y="200" width="60" height="55" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_brnz_lb" value="&lt;font color='#FFD7A8' style='font-size:8px'&gt;Delta Table&lt;br/&gt;Overwrite · Partitioned&lt;br/&gt;/bronze/&lt;object&gt;/dt=YYYYMMDD/&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1180" y="260" width="232" height="80" as="geometry"/>
     </mxCell>
 
-    <!-- TF 3a Fact -->
-    <mxCell id="t3a" value="&lt;b&gt;3a. Fact Engine — FactSales&lt;/b&gt;&lt;br/&gt;SHA-256(source_system ‖ sales_id ‖ order_date) → transaction_hash&lt;br/&gt;Temporal FK join: dim SK valid at transaction_date (effective_from ≤ date ≤ effective_to)&lt;br/&gt;Late-arriving: customer_key / product_key = -1 if no dim row found&lt;br/&gt;Creates bridge entry (PENDING) for unresolved FKs&lt;br/&gt;MERGE ON transaction_hash → idempotent upsert; partitioned by fact_batch_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="640" y="420" width="490" height="105" as="geometry" />
+    <!-- SILVER column -->
+    <mxCell id="s5_slvr_bg" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="365" width="240" height="200" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_slvr_hdr" value="SILVER" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="372" width="240" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_slvr_sub" value="(Standardized)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;fontColor=#BDD7EE;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="393" width="240" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_slvr_ic" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#4472C4;strokeColor=#1F4E79;" vertex="1" parent="1">
+      <mxGeometry x="1264" y="415" width="60" height="55" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_slvr_lb" value="&lt;font color='#BDD7EE' style='font-size:8px'&gt;Delta Table&lt;br/&gt;Append · batch_id partitioned&lt;br/&gt;/silver/&lt;object&gt;/dt=YYYYMMDD/&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1180" y="475" width="232" height="80" as="geometry"/>
     </mxCell>
 
-    <!-- TF 3b Resolution -->
-    <mxCell id="t3b" value="&lt;b&gt;3b. Resolution Engine&lt;/b&gt;&lt;br/&gt;Reads late_arriving_dimension_bridge WHERE status='PENDING'&lt;br/&gt;Looks up dim SK for natural_key valid at transaction_date&lt;br/&gt;If found: MERGE fact table updating SK column; mark bridge RESOLVED&lt;br/&gt;resolved_surrogate_key + resolved_timestamp populated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1150" y="435" width="510" height="90" as="geometry" />
+    <!-- GOLD column -->
+    <mxCell id="s5_gold_bg" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#BF9000;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="580" width="240" height="200" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_gold_hdr" value="GOLD" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="587" width="240" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_gold_sub" value="(Business Ready)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;fontColor=#FFE699;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="608" width="240" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_gold_ic" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#F4B942;strokeColor=#7F6000;" vertex="1" parent="1">
+      <mxGeometry x="1264" y="630" width="60" height="55" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_gold_lb" value="&lt;font color='#FFE699' style='font-size:8px'&gt;Delta Table · Star Schema&lt;br/&gt;Dim + Fact + Bridge&lt;br/&gt;/gold/dimensions/ /gold/facts/&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1180" y="690" width="232" height="80" as="geometry"/>
     </mxCell>
 
-    <!-- Late arriving bridge -->
-    <mxCell id="t_bridge" value="&lt;b&gt;gold.late_arriving_dimension_bridge&lt;/b&gt;&lt;br/&gt;resolution_hash = SHA-256(transaction_hash ‖ dim_name ‖ natural_key)&lt;br/&gt;transaction_hash (FK → fact_sales)&lt;br/&gt;dimension_name / natural_key / transaction_date&lt;br/&gt;fact_key_column / fact_table_name&lt;br/&gt;PENDING → fact SK=-1 | RESOLVED → FK backfilled" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1150" y="540" width="510" height="100" as="geometry" />
+    <!-- Conventions -->
+    <mxCell id="s5_conv_lb" value="&lt;b&gt;Conventions:&lt;/b&gt;&lt;br/&gt;/bronze/&lt;object&gt;/dt=YYYYMMDD/&lt;br/&gt;/silver/&lt;object&gt;/dt=YYYYMMDD/&lt;br/&gt;/gold/dimensions/&lt;dim_name&gt;/&lt;br/&gt;/gold/facts/&lt;fact_name&gt;/" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontColor=#555555;" vertex="1" parent="1">
+      <mxGeometry x="1176" y="796" width="240" height="80" as="geometry"/>
     </mxCell>
 
-    <!-- TF 4 Column Mask Gold -->
-    <mxCell id="t4" value="&lt;b&gt;4. Column Mask — Gold&lt;/b&gt;&lt;br/&gt;_apply_column_masks(gold_table)&lt;br/&gt;ALTER TABLE … ALTER COLUMN … SET MASK (Unity Catalog); graceful skip in CE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="640" y="660" width="1020" height="55" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 6: TRANSFORMATION (DATABRICKS)
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s6" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="1446" y="72" width="272" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s6" value="6" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F9A825;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1564" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s6" value="TRANSFORMATION (DATABRICKS)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1446" y="120" width="272" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_dbx_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF3621;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_databricks;" vertex="1" parent="1">
+      <mxGeometry x="1558" y="148" width="44" height="44" as="geometry"/>
     </mxCell>
 
-    <!-- TF 5 DQ box -->
-    <mxCell id="t5bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-      <mxGeometry x="640" y="730" width="1020" height="230" as="geometry" />
+    <!-- Notebook: scd2_dimension_loader -->
+    <mxCell id="s6_nb1_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="205" width="248" height="24" as="geometry"/>
     </mxCell>
-    <mxCell id="t5h" value="&lt;b&gt;5. Gold DQ Checks — 7 check types (post-load validation against written Gold table)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="652" y="735" width="790" height="20" as="geometry" />
+    <mxCell id="s6_nb1_lb" value="&lt;font color='#BDD7EE' style='font-size:8px;font-weight:bold'&gt;Notebook: TF_Gold_Load_Engine.py (Dimensions)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="208" width="248" height="18" as="geometry"/>
     </mxCell>
-    <mxCell id="t5_rcm" value="row_count_min — table rows ≥ min" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="652" y="760" width="320" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_nn"  value="not_null — column must not be NULL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="984" y="760" width="320" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_ng"  value="not_negative — numeric ≥ 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="652" y="798" width="320" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_zc"  value="zero_check — warn if any value = 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="984" y="798" width="320" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_av"  value="allowed_values — value in permitted set" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="652" y="836" width="320" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_dk"  value="duplicate_key — composite key must be unique" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="984" y="836" width="320" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_ri"  value="referential_integrity — FK exists in dim table (excluding unknown_key = -1 sentinel)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="1"><mxGeometry x="652" y="874" width="652" height="28" as="geometry" /></mxCell>
-    <mxCell id="t5_sv"  value="severity=error → DQ_FAILED flag + audit log  |  severity=warning → log only, load still succeeds" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;" vertex="1" parent="1"><mxGeometry x="652" y="912" width="996" height="20" as="geometry" /></mxCell>
-    <mxCell id="t5_note" value="DQ checks run post-load (validation, not filtering) — results written to audit.dq_check_log" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontStyle=2;" vertex="1" parent="1"><mxGeometry x="652" y="934" width="996" height="16" as="geometry" /></mxCell>
-
-    <!-- TF 6 Audit -->
-    <mxCell id="t6" value="&lt;b&gt;6. Audit Write&lt;/b&gt;&lt;br/&gt;_audit_log() → audit.pipeline_run_log (rows_written, duration, COMPLETED/FAILED)&lt;br/&gt;_dq_log() → audit.dq_check_log (per-check: PASSED/FAILED, rows_checked, rows_failed)&lt;br/&gt;_alert_log() → audit.alert_log when error-severity DQ check fails" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="640" y="975" width="1020" height="75" as="geometry" />
+    <mxCell id="s6_dim_box" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F9A825;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="238" width="248" height="185" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_dim_lb" value="&lt;b&gt;SCD Type 2 Engine:&lt;/b&gt;&lt;br/&gt;1. Read TF YAML (Dimension)&lt;br/&gt;2. SHA-256(tracked cols) → hash&lt;br/&gt;3. Compare hash to current dim&lt;br/&gt;4. New: INSERT with surrogate key&lt;br/&gt;5. Changed: expire + INSERT new&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Sentinel:&lt;/b&gt; SK=-1, ID=UNKNOWN&lt;br/&gt;effective 1900-01-01 → 9999-12-31&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Dim Date:&lt;/b&gt; Full overwrite&lt;br/&gt;yyyyMMdd key, is_weekend, etc." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=8;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1466" y="246" width="232" height="169" as="geometry"/>
     </mxCell>
 
-    <!-- TF flow arrows -->
-    <mxCell id="et12a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" source="t1" target="t2a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et12b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" source="t1" target="t2b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et2a3a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;" edge="1" source="t2a" target="t3a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et2b3b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;" edge="1" source="t2b" target="t3b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et3b_br" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d79b00;dashed=1;" edge="1" source="t3b" target="t_bridge" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et3a4"  style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;" edge="1" source="t3a" target="t4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et_br4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9673a6;" edge="1" source="t_bridge" target="t4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et45"   style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="t4" target="t5bg" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="et56"   style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;" edge="1" source="t5bg" target="t6" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-
-    <!-- ═══ SECURITY (right column) ══════════════════════════════════════════ -->
-    <mxCell id="z_sec" value="Cross-Cutting Security &amp; Governance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;verticalAlign=top;" vertex="1" parent="1">
-      <mxGeometry x="1700" y="200" width="600" height="1070" as="geometry" />
+    <!-- Notebook: fact_sales_loader -->
+    <mxCell id="s6_nb2_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="436" width="248" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_nb2_lb" value="&lt;font color='#BDD7EE' style='font-size:8px;font-weight:bold'&gt;Notebook: TF_Gold_Load_Engine.py (Facts)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="439" width="248" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_fact_box" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F9A825;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="469" width="248" height="195" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_fact_lb" value="&lt;b&gt;Fact Engine:&lt;/b&gt;&lt;br/&gt;1. Read TF YAML (Fact)&lt;br/&gt;2. SHA-256(sys‖sales_id‖date) → tx hash&lt;br/&gt;3. Temporal FK join on dim SK&lt;br/&gt;   (effective_from ≤ date ≤ effective_to)&lt;br/&gt;4. Late-arriving: FK=-1, write bridge&lt;br/&gt;5. MERGE ON transaction_hash (upsert)&lt;br/&gt;6. Partitioned by fact_batch_id&lt;br/&gt;&lt;br/&gt;&lt;b&gt;TF YAML covers:&lt;/b&gt;&lt;br/&gt;source_tables · joins · business_rules&lt;br/&gt;scd_type · target_table · dq.rules" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=8;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1466" y="477" width="232" height="179" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec1" value="&lt;b&gt;ADLS Customer-Managed Key (CMK)&lt;/b&gt;&lt;br/&gt;Azure Key Vault holds encryption key&lt;br/&gt;All data at rest encrypted (ADLS Gen2)&lt;br/&gt;Key rotation policy + access policy configured&lt;br/&gt;Key Vault soft-delete + purge protection on" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="235" width="570" height="80" as="geometry" />
+    <!-- Gold DQ checks box -->
+    <mxCell id="s6_dq_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#F9A825;" vertex="1" parent="1">
+      <mxGeometry x="1458" y="678" width="248" height="120" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_dq_lb" value="&lt;b&gt;Gold DQ Checks (7 types):&lt;/b&gt;&lt;br/&gt;row_count_min · not_null&lt;br/&gt;not_negative · zero_check&lt;br/&gt;allowed_values · duplicate_key&lt;br/&gt;referential_integrity&lt;br/&gt;&lt;font color='#FF3621'&gt;severity: error → DQ_FAILED flag&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=8;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1466" y="686" width="232" height="104" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec2" value="&lt;b&gt;Unity Catalog Column Masking&lt;/b&gt;&lt;br/&gt;ALTER TABLE … ALTER COLUMN … SET MASK&lt;br/&gt;mask_function: Python/SQL UDF per PII column&lt;br/&gt;exempt_roles: [data_engineer, analyst] see plaintext&lt;br/&gt;Non-exempt roles receive NULL for masked columns&lt;br/&gt;Applied at Bronze AND Silver AND Gold layers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="330" width="570" height="90" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 7: LATE ARRIVING DIMENSION RESOLUTION
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s7" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#E91E63;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="1728" y="72" width="272" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s7" value="7" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E91E63;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1846" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s7" value="LATE ARRIVING DIMENSION RESOLUTION" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1728" y="120" width="272" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s7_dbx_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF3621;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_databricks;" vertex="1" parent="1">
+      <mxGeometry x="1840" y="148" width="44" height="44" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec3" value="&lt;b&gt;Mask Function Examples&lt;/b&gt;&lt;br/&gt;pii_mask_customer_name(name, ctx)&lt;br/&gt;pii_mask_email(email, ctx)&lt;br/&gt;pii_mask_phone(phone, ctx)&lt;br/&gt;→ Returns original for exempt roles, else NULL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="435" width="570" height="80" as="geometry" />
+    <!-- Notebook -->
+    <mxCell id="s7_nb_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#E91E63;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="205" width="248" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="s7_nb_lb" value="&lt;font color='#ffffff' style='font-size:8px;font-weight:bold'&gt;Notebook: TF_Gold_Load_Engine.py (Resolution)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="208" width="248" height="18" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec4" value="&lt;b&gt;Secrets Management&lt;/b&gt;&lt;br/&gt;Databricks Secret Scope backed by Azure Key Vault&lt;br/&gt;dbutils.secrets.get(scope, key) — no secrets in code&lt;br/&gt;ADLS SAS / service principal credentials via secrets&lt;br/&gt;No credentials in YAML config files" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="530" width="570" height="80" as="geometry" />
+    <!-- Steps -->
+    <mxCell id="s7_steps_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E91E63;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="238" width="248" height="140" as="geometry"/>
+    </mxCell>
+    <mxCell id="s7_steps_lb" value="&lt;b&gt;Steps:&lt;/b&gt;&lt;br/&gt;1. Read bridge WHERE status='PENDING'&lt;br/&gt;2. Find dim SK for natural_key&lt;br/&gt;   at transaction_date&lt;br/&gt;3. MERGE fact table (update FK)&lt;br/&gt;4. Mark bridge as 'RESOLVED'&lt;br/&gt;5. Write resolved_surrogate_key&lt;br/&gt;6. Write resolved_timestamp" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1748" y="246" width="232" height="124" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec5" value="&lt;b&gt;Unity Catalog RBAC / ACLs&lt;/b&gt;&lt;br/&gt;Catalog → Schema → Table level GRANTs&lt;br/&gt;Row-level + column-level security enforced&lt;br/&gt;Data steward approval required for PII access&lt;br/&gt;Audit trail for all access events" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="625" width="570" height="80" as="geometry" />
+    <!-- Bridge table -->
+    <mxCell id="s7_bridge_hdr" value="Bridge Table" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#E91E63;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="392" width="248" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="s7_bridge_sub" value="late_arriving_dimension_bridge" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontStyle=2;fontColor=#E91E63;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="412" width="248" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s7_bridge_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E91E63;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="432" width="248" height="230" as="geometry"/>
+    </mxCell>
+    <mxCell id="s7_bridge_lb" value="&lt;b&gt;resolution_hash&lt;/b&gt; (SHA-256, PK)&lt;br/&gt;transaction_hash (FK → fact_sales)&lt;br/&gt;dimension_name&lt;br/&gt;natural_key&lt;br/&gt;transaction_date&lt;br/&gt;fact_key_column&lt;br/&gt;fact_table_name&lt;br/&gt;&lt;br/&gt;&lt;b&gt;status:&lt;/b&gt;&lt;br/&gt;&lt;font color='#E91E63'&gt;PENDING → fact SK=-1&lt;/font&gt;&lt;br/&gt;&lt;font color='#107C10'&gt;RESOLVED → FK backfilled&lt;/font&gt;&lt;br/&gt;&lt;br/&gt;resolved_surrogate_key&lt;br/&gt;first_seen_timestamp&lt;br/&gt;resolved_timestamp" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1748" y="440" width="232" height="214" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec6" value="&lt;b&gt;Network Controls&lt;/b&gt;&lt;br/&gt;Azure Private Endpoints for ADLS + Key Vault&lt;br/&gt;Databricks Managed VNet — no public inbound&lt;br/&gt;NSG rules restrict egress&lt;br/&gt;ADF Managed Integration Runtime in VNet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="720" width="570" height="80" as="geometry" />
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION 8: CONSUMPTION & GOVERNANCE
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_s8" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#F0E6FF;strokeColor=#7030A0;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="2010" y="72" width="312" height="900" as="geometry"/>
+    </mxCell>
+    <mxCell id="num_s8" value="8" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7030A0;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="2148" y="80" width="36" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="hdr_s8" value="CONSUMPTION &amp; GOVERNANCE" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=10;fontStyle=1;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2010" y="120" width="312" height="22" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec7" value="&lt;b&gt;CI/CD Security Gates&lt;/b&gt;&lt;br/&gt;validate_yamls.py — blocks malformed DQ / security YAML&lt;br/&gt;87 pytest tests — prevents regression in DQ / security logic&lt;br/&gt;GitHub Actions: dev auto-deploy, prod manual approval gate&lt;br/&gt;Branch protection rules on main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="815" width="570" height="80" as="geometry" />
+    <!-- Power BI -->
+    <mxCell id="s8_pbi_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#F2C811;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.power_bi;" vertex="1" parent="1">
+      <mxGeometry x="2132" y="150" width="60" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_pbi_lb" value="Power BI Dashboards" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2025" y="218" width="282" height="20" as="geometry"/>
     </mxCell>
 
-    <mxCell id="sec8" value="&lt;b&gt;Immutable Audit Trail&lt;/b&gt;&lt;br/&gt;audit.pipeline_run_log — all pipeline executions&lt;br/&gt;audit.dq_check_log — every DQ check result&lt;br/&gt;audit.alert_log — error-severity failures&lt;br/&gt;silver.*_error — rejected rows (never deleted)&lt;br/&gt;Delta tables; append-only; no DELETE operations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1715" y="910" width="570" height="90" as="geometry" />
+    <!-- Unity Catalog section -->
+    <mxCell id="s8_uc_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7030A0;" vertex="1" parent="1">
+      <mxGeometry x="2022" y="250" width="288" height="150" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_uc_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_active_directory;" vertex="1" parent="1">
+      <mxGeometry x="2026" y="256" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_uc_lb" value="&lt;b&gt;Unity Catalog&lt;/b&gt;&lt;br/&gt;• Table Level Security&lt;br/&gt;• Column Level Security&lt;br/&gt;• PII Masking (mask functions)&lt;br/&gt;• Row-level access control&lt;br/&gt;• Catalog / Schema / Table GRANTs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2068" y="258" width="234" height="134" as="geometry"/>
     </mxCell>
 
-    <!-- ═══ AUDIT TABLES (bottom) ════════════════════════════════════════════ -->
-    <mxCell id="z_aud" value="Audit Schema (audit.*) — Append-Only, Immutable Delta Tables" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;fontStyle=1;fontSize=11;verticalAlign=top;" vertex="1" parent="1">
-      <mxGeometry x="20" y="1290" width="2280" height="170" as="geometry" />
+    <!-- Key Vault -->
+    <mxCell id="s8_kv_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.key_vaults;" vertex="1" parent="1">
+      <mxGeometry x="2022" y="414" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_kv_lb" value="&lt;b&gt;Azure Key Vault&lt;/b&gt;&lt;br/&gt;CMK · Secret Scope · Key Rotation" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2064" y="420" width="248" height="28" as="geometry"/>
     </mxCell>
 
-    <mxCell id="a1" value="&lt;b&gt;audit.pipeline_run_log&lt;/b&gt;&lt;br/&gt;run_id / pipeline_name / batch_id&lt;br/&gt;table_name / status&lt;br/&gt;rows_read / rows_written / rows_rejected&lt;br/&gt;start_time / end_time / duration_s" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="40" y="1325" width="310" height="110" as="geometry" />
+    <!-- Monitoring -->
+    <mxCell id="s8_mon_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7030A0;" vertex="1" parent="1">
+      <mxGeometry x="2022" y="460" width="288" height="210" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_mon_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.monitor;" vertex="1" parent="1">
+      <mxGeometry x="2026" y="466" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_mon_lb" value="&lt;b&gt;Monitoring &amp; Audit&lt;/b&gt;&lt;br/&gt;• audit.pipeline_run_log&lt;br/&gt;• audit.dq_check_log&lt;br/&gt;• audit.alert_log&lt;br/&gt;• silver.*_error tables&lt;br/&gt;&lt;br/&gt;DQ Metrics per pipeline run&lt;br/&gt;Immutable Delta · Never deleted" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2068" y="468" width="234" height="194" as="geometry"/>
     </mxCell>
 
-    <mxCell id="a2" value="&lt;b&gt;audit.dq_check_log&lt;/b&gt;&lt;br/&gt;run_id / pipeline_name / batch_id&lt;br/&gt;table_name / check_name / column_name&lt;br/&gt;status (PASSED / FAILED)&lt;br/&gt;rows_checked / rows_failed&lt;br/&gt;severity / message / checked_at" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="370" y="1325" width="310" height="110" as="geometry" />
+    <!-- CI/CD -->
+    <mxCell id="s8_ci_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_devops;" vertex="1" parent="1">
+      <mxGeometry x="2022" y="682" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_ci_lb" value="&lt;b&gt;GitHub Actions CI/CD&lt;/b&gt;&lt;br/&gt;87 pytest · YAML validator · Prod gate" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2064" y="688" width="248" height="28" as="geometry"/>
     </mxCell>
 
-    <mxCell id="a3" value="&lt;b&gt;audit.alert_log&lt;/b&gt;&lt;br/&gt;run_id / pipeline_name / batch_id&lt;br/&gt;alert_type / severity&lt;br/&gt;table_name / message / raised_at&lt;br/&gt;(raised on error-severity DQ failures)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="700" y="1325" width="310" height="110" as="geometry" />
+    <!-- Private Link / Network -->
+    <mxCell id="s8_net_ic" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.private_link;" vertex="1" parent="1">
+      <mxGeometry x="2022" y="730" width="34" height="34" as="geometry"/>
+    </mxCell>
+    <mxCell id="s8_net_lb" value="&lt;b&gt;Private Link / VNet&lt;/b&gt;&lt;br/&gt;Managed VNet · No public inbound" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2064" y="736" width="248" height="28" as="geometry"/>
     </mxCell>
 
-    <mxCell id="g_schema" value="&lt;b&gt;Gold Schema (gold.*)&lt;/b&gt;&lt;br/&gt;dim_date (full overwrite)&lt;br/&gt;dim_customer — SCD2, partitioned&lt;br/&gt;dim_product — SCD2, partitioned&lt;br/&gt;fact_sales — MERGE on transaction_hash, partitioned by fact_batch_id&lt;br/&gt;late_arriving_dimension_bridge — PENDING / RESOLVED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1030" y="1325" width="480" height="110" as="geometry" />
-    </mxCell>
-
-    <mxCell id="s_schema" value="&lt;b&gt;Silver Schema (silver.*)&lt;/b&gt;&lt;br/&gt;sales_transactions (append, partitioned by batch_id)&lt;br/&gt;customer_master (append)&lt;br/&gt;product_master (append)&lt;br/&gt;sales_transactions_error (permanent reject trail)&lt;br/&gt;customer_master_error | product_master_error" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="1530" y="1325" width="480" height="110" as="geometry" />
-    </mxCell>
-
-    <mxCell id="b_schema" value="&lt;b&gt;Bronze Schema (bronze.*)&lt;/b&gt;&lt;br/&gt;sales_transactions (overwrite per batch)&lt;br/&gt;customer_master (overwrite per batch)&lt;br/&gt;product_master (overwrite per batch)&lt;br/&gt;All partitioned by batch_id&lt;br/&gt;Preserves original raw values" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
-      <mxGeometry x="2030" y="1325" width="255" height="110" as="geometry" />
-    </mxCell>
-
-    <!-- dispatch → SD engine -->
-    <mxCell id="e_disp_sd" value="SD source" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;dashed=1;fontSize=9;" edge="1" source="c_disp" target="s1" parent="1">
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECTION FLOW ARROWS
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="arr_12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0078D4;strokeWidth=3;fillColor=#0078D4;" edge="1" parent="1">
       <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="1220" y="165" />
-          <mxPoint x="310" y="165" />
-          <mxPoint x="310" y="235" />
-        </Array>
+        <mxPoint x="290" y="450" as="sourcePoint"/>
+        <mxPoint x="300" y="450" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr_23" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00B050;strokeWidth=3;fillColor=#00B050;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="590" y="450" as="sourcePoint"/>
+        <mxPoint x="600" y="450" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr_34" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FF8C00;strokeWidth=3;fillColor=#FF8C00;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="872" y="450" as="sourcePoint"/>
+        <mxPoint x="882" y="450" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr_45" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=3;fillColor=#555555;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1154" y="450" as="sourcePoint"/>
+        <mxPoint x="1164" y="450" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr_56" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#F9A825;strokeWidth=3;fillColor=#F9A825;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1436" y="450" as="sourcePoint"/>
+        <mxPoint x="1446" y="450" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr_67" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E91E63;strokeWidth=3;fillColor=#E91E63;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1718" y="450" as="sourcePoint"/>
+        <mxPoint x="1728" y="450" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr_78" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#7030A0;strokeWidth=3;fillColor=#7030A0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="2000" y="450" as="sourcePoint"/>
+        <mxPoint x="2010" y="450" as="targetPoint"/>
       </mxGeometry>
     </mxCell>
 
-    <!-- dispatch → TF engine -->
-    <mxCell id="e_disp_tf" value="TF object_type" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;dashed=1;fontSize=9;" edge="1" source="c_disp" target="t1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <Array as="points">
-          <mxPoint x="1550" y="165" />
-          <mxPoint x="1150" y="165" />
-          <mxPoint x="1150" y="235" />
-        </Array>
-      </mxGeometry>
+    <!-- ══════════════════════════════════════════════════════════════════════
+         BOTTOM BAND — 4 Pillars
+    ══════════════════════════════════════════════════════════════════════ -->
+    <mxCell id="bg_bot" value="" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#AAAAAA;" vertex="1" parent="1">
+      <mxGeometry x="20" y="990" width="2302" height="180" as="geometry"/>
     </mxCell>
 
-    <!-- SD audit write → audit tables -->
-    <mxCell id="e_s8_a1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;dashed=1;" edge="1" source="s8" target="a1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="e_s8_a2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;dashed=1;" edge="1" source="s8" target="a2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <!-- Pillar 1: Metadata & Code -->
+    <mxCell id="bot_p1_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4472C4;" vertex="1" parent="1">
+      <mxGeometry x="36" y="1005" width="530" height="150" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p1_hdr" value="METADATA &amp; CODE REPOSITORY" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="36" y="1010" width="530" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p1_ic1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF8C00;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.storage_accounts;" vertex="1" parent="1">
+      <mxGeometry x="80" y="1042" width="42" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p1_lb1" value="&lt;b&gt;YAML Configs&lt;/b&gt;&lt;br/&gt;Ingestion / SD / TF YAML" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="50" y="1089" width="105" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p1_ic2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#1F3864;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_devops;" vertex="1" parent="1">
+      <mxGeometry x="255" y="1042" width="42" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p1_lb2" value="&lt;b&gt;GitHub Repository&lt;/b&gt;&lt;br/&gt;Version Control / CI-CD" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="215" y="1089" width="120" height="40" as="geometry"/>
+    </mxCell>
 
-    <!-- TF audit write → audit tables -->
-    <mxCell id="e_t6_a1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;dashed=1;" edge="1" source="t6" target="a1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
-    <mxCell id="e_t6_a2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;dashed=1;" edge="1" source="t6" target="a2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <!-- Pillar 2: Orchestration & Integration -->
+    <mxCell id="bot_p2_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0078D4;" vertex="1" parent="1">
+      <mxGeometry x="582" y="1005" width="530" height="150" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_hdr" value="ORCHESTRATION &amp; INTEGRATION" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="582" y="1010" width="530" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_ic1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.adf;" vertex="1" parent="1">
+      <mxGeometry x="615" y="1042" width="42" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_lb1" value="&lt;b&gt;Azure Data Factory&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="590" y="1089" width="95" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_ic2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF8C00;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.function_apps;" vertex="1" parent="1">
+      <mxGeometry x="776" y="1042" width="42" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_lb2" value="&lt;b&gt;Azure Function&lt;/b&gt;&lt;br/&gt;(Event Trigger)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="748" y="1089" width="100" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_ic3" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF3621;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_databricks;" vertex="1" parent="1">
+      <mxGeometry x="962" y="1042" width="42" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p2_lb3" value="&lt;b&gt;Databricks Jobs&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="938" y="1089" width="95" height="40" as="geometry"/>
+    </mxCell>
 
-    <!-- SD → Silver schema note -->
-    <mxCell id="e_s6a_sch" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;dashed=1;" edge="1" source="s6a" target="s_schema" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <!-- Pillar 3: Platform Services -->
+    <mxCell id="bot_p3_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#107C10;" vertex="1" parent="1">
+      <mxGeometry x="1128" y="1005" width="600" height="150" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_hdr" value="PLATFORM SERVICES" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1128" y="1010" width="600" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_ic1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.datalake_store;" vertex="1" parent="1">
+      <mxGeometry x="1153" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_lb1" value="&lt;b&gt;ADLS Gen2&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1135" y="1085" width="74" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_ic2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF3621;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_databricks;" vertex="1" parent="1">
+      <mxGeometry x="1282" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_lb2" value="&lt;b&gt;Databricks&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1264" y="1085" width="74" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_ic3" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.azure_active_directory;" vertex="1" parent="1">
+      <mxGeometry x="1411" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_lb3" value="&lt;b&gt;Unity Catalog&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1393" y="1085" width="74" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_ic4" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#7030A0;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.key_vaults;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_lb4" value="&lt;b&gt;Key Vault&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1522" y="1085" width="74" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_ic5" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.private_link;" vertex="1" parent="1">
+      <mxGeometry x="1669" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p3_lb5" value="&lt;b&gt;Private Link&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1651" y="1085" width="74" height="40" as="geometry"/>
+    </mxCell>
 
-    <!-- TF fact → Gold schema note -->
-    <mxCell id="e_t3a_gsch" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;dashed=1;" edge="1" source="t3a" target="g_schema" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <!-- Pillar 4: Monitoring & Observability -->
+    <mxCell id="bot_p4_bg" value="" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#555555;" vertex="1" parent="1">
+      <mxGeometry x="1744" y="1005" width="562" height="150" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_hdr" value="MONITORING &amp; OBSERVABILITY" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1744" y="1010" width="562" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_ic1" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.monitor;" vertex="1" parent="1">
+      <mxGeometry x="1768" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_lb1" value="&lt;b&gt;Azure Monitor&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1748" y="1085" width="80" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_ic2" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#0078D4;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.log_analytics;" vertex="1" parent="1">
+      <mxGeometry x="1924" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_lb2" value="&lt;b&gt;Log Analytics&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="1904" y="1085" width="80" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_ic3" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#FF0000;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.monitor;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_lb3" value="&lt;b&gt;Alerts&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2065" y="1085" width="70" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_ic4" value="" style="outlineConnect=0;gradientColor=none;strokeColor=none;fillColor=#F2C811;labelBackgroundColor=none;align=center;html=1;shape=mxgraph.azure2.power_bi;" vertex="1" parent="1">
+      <mxGeometry x="2222" y="1042" width="38" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="bot_p4_lb4" value="&lt;b&gt;Dashboards&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=9;fontColor=#1F3864;" vertex="1" parent="1">
+      <mxGeometry x="2202" y="1085" width="80" height="40" as="geometry"/>
+    </mxCell>
 
   </root>
 </mxGraphModel>
