@@ -46,6 +46,14 @@ The three notebooks that drive all data movement are **fully generic** — they 
 
 ## 2. Architecture
 
+### High Level Architecture
+
+![HLA Architecture](docs/HLA_Architecture.svg)
+
+> **Interactive diagrams:** [HLA draw.io](docs/HLA_Architecture.drawio) · [LLA draw.io](docs/LLA_Architecture.drawio)
+
+### Data Flow Summary
+
 ```
 <img width="2303" height="1056" alt="HLD drawio" src="https://github.com/user-attachments/assets/6b345b77-249a-4f45-8c53-13c0599fec47" />
 
